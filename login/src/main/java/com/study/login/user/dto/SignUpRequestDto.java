@@ -2,9 +2,6 @@ package com.study.login.user.dto;
 
 import com.study.login.user.domain.Role;
 import com.study.login.user.domain.User;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

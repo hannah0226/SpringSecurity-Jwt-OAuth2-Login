@@ -1,6 +1,5 @@
 package com.study.login.user.service;
 
-import com.study.login.user.domain.Role;
 import com.study.login.user.domain.User;
 import com.study.login.user.dto.SignUpRequestDto;
 import com.study.login.global.exception.CustomException;
