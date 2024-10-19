@@ -1,8 +1,13 @@
 package com.study.login.user.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity // 엔티티로 지정
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
