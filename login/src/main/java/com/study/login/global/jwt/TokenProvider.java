@@ -9,11 +9,13 @@ import io.jsonwebtoken.security.SecurityException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -38,6 +40,7 @@ public class TokenProvider {
     private static final String AUTH_CLAIM = "auth";
 
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     /**
      * AccessToken 생성 메소드
@@ -88,6 +91,18 @@ public class TokenProvider {
                 // 서명 - 시크릿키와 함께 해시값을 HS256 방식으로 암호화
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    /**
+     * Redis에 리프레시 토큰을 저장하는 메소드
+     * key: 사용자 ID, alue: 리프레시 토큰
+     * 리프레시토큰 만료 시간(refreshTokenExpiration)을 만료시간으로 정해 자동으로 삭제되도록 설정
+     *
+     * @param userId 저장할 사용자 Id (Redis 키로 사용)
+     * @param refreshToken 저장할 리프레시 토큰
+     */
+    public void saveRefreshToken(Long userId, String refreshToken){
+        redisTemplate.opsForValue().set(userId.toString(),refreshToken, Duration.ofMillis(refreshTokenExpiration));
     }
 
     /**
