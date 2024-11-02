@@ -1,13 +1,11 @@
 package com.study.login.user.service;
 
 import com.study.login.global.jwt.TokenProvider;
+import com.study.login.global.utils.SecurityUtils;
 import com.study.login.user.domain.User;
-import com.study.login.user.dto.LoginRequestDto;
-import com.study.login.user.dto.LoginResponseDto;
-import com.study.login.user.dto.SignUpRequestDto;
+import com.study.login.user.dto.*;
 import com.study.login.global.exception.CustomException;
 import com.study.login.global.exception.ErrorCode;
-import com.study.login.user.dto.TokenResponseDto;
 import com.study.login.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 
 @Service
 @Transactional
@@ -101,6 +98,21 @@ public class AuthService {
         return TokenResponseDto.builder()
                 .accessToken(accessToken)
                 .build();
+    }
+
+    /**
+     * OAuth2 로그인시 추가정보(나이, 도시) 저장 메서드
+     *
+     * Resource Server에서 받아오지 못하는 정보들을 따로 받아와 저장한다.
+     * 추가 정보를 받기전까지 사용자의 권한은 GUEST이며, 추가정보를 받으면 USER로 권한을 업그레이드 한다.
+     */
+    public String updateInfo(UpdateInfoRequestDto requestDto) {
+        String email = SecurityUtils.getCurrentUsername();
+        User user = getUserByEmail(email);
+
+        user.updateAdditionalInfo(requestDto.getAge(), requestDto.getCity());
+        userRepository.save(user);
+        return "사용자 정보가 저장되었습니다.";
     }
 
 

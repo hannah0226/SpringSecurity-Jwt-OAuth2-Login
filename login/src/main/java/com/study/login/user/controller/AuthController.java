@@ -37,6 +37,14 @@ public class AuthController {
      */
     @PostMapping("/token")
     public ResponseEntity<TokenResponseDto> reissuedAccessToken(@RequestBody TokenRequestDto requestDto){
-        return ResponseEntity.ok(authService.reissueAccessToken(requestDto.getRefreshToken()));
+        return ResponseEntity.status(HttpStatus.OK).body(authService.reissueAccessToken(requestDto.getRefreshToken()));
+    }
+
+    /**
+     * OAuth2 로그인시 추가정보(나이, 도시) 저장 메서드
+     */
+    @PatchMapping("/update-info")
+    public ResponseEntity<String> updateInfo(@RequestBody UpdateInfoRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.updateInfo(requestDto));
     }
 }
