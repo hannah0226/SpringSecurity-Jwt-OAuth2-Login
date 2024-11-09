@@ -43,7 +43,7 @@ Spring Security + Jwt 자체 로그인 &amp; OAuth2 로그인 공부 레포지�
   ```
 
 ### 2. `/auth/login` - 일반 로그인
-- **설명**: 사용자가 로그인을 요청하면 이메일로 사용자를 찾고 비밀번호를 검증한다. 성공적으로 인증되면 AccessToken과 RefreshToken을 생성하여 반환한다.
+- **설명**: 사용자가 로그인을 요청하면 이메일로 사용자를 찾고 비밀번호를 검증한다. 성공적으로 인증되면 AccessToken과 RefreshToken을 생성하여 반환하고, RefreshToken은 Redis에 저장한다.
 - **Request Body**:
   ```json
   {
@@ -69,7 +69,7 @@ Spring Security + Jwt 자체 로그인 &amp; OAuth2 로그인 공부 레포지�
         - `User 조회`: 이메일을 기반으로 데이터베이스에서 사용자를 조회한다.
         - `신규 사용자 등록`: 기존에 가입된 사용자가 없을 경우, 새로운 User 엔티티를 생성하고 DB에 저장한다. 초기 권한은 GUEST로 설정된다.
     4. 인증 토큰 생성:
-        - OAuth2AuthenticationSuccessHandler는 인증이 완료된 사용자에 대해 TokenProvider를 통해 AccessToken과 RefreshToken을 생성한다.
+        - OAuth2AuthenticationSuccessHandler는 인증이 완료된 사용자에 대해 TokenProvider를 통해 AccessToken과 RefreshToken을 생성하고, RefreshToken은 Redis에 저장한다.
         - 생성된 토큰은 JSON 응답으로 반환되며, 클라이언트는 이를 저장하고 이후 요청 시 인증 수단으로 사용한다.
 
 ### 4. `/auth/update-info` - OAuth2 로그인 시 추가 정보 등록
