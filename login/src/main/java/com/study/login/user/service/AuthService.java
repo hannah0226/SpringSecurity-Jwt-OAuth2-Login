@@ -23,11 +23,12 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisTemplate<String, String> redisTemplate;
 
-
-
     /**
-     * Auth 회원가입
+     * 일반 회원가입
      * 중복된 이메일이나 닉네임이 존재할 경우 예외를 발생시킴
+     *
+     * @param requestDto 회원가입 요청 데이터 (이메일, 비밀번호, 닉네임, 나이, 도시)
+     * @return 닉네임 + 회원가입 완료 메세지
      */
     public String signup(SignUpRequestDto requestDto){
         // 이메일과 닉네임이 중복되는지 확인
@@ -44,7 +45,7 @@ public class AuthService {
     }
 
     /**
-     * Auth 로그인
+     * 일반 로그인
      *
      * @param requestDto 로그인 요청 데이터 (이메일, 비밀번호)
      * @return 로그인 응답 데이터 (액세스 토큰, 리프레시 토큰)

@@ -1,9 +1,8 @@
-package com.study.login.global.filter;
+package com.study.login.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.login.global.exception.CustomException;
 import com.study.login.global.exception.ErrorDto;
-import com.study.login.global.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

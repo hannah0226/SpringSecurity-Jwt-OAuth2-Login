@@ -74,6 +74,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     /**
      * 사용자 생성 메서드
      *
+     * OAuth2로그인은 비밀번호가 필요하지 않으므로 null
      * @param oAuth2UserInfo
      * @param socialType
      * @return

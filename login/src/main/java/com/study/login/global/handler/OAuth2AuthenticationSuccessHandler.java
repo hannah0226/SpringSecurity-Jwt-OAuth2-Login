@@ -1,4 +1,4 @@
-package com.study.login.global.oauth2;
+package com.study.login.global.handler;
 
 import com.study.login.global.jwt.TokenProvider;
 import com.study.login.user.domain.User;

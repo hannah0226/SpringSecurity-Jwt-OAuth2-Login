@@ -1,5 +1,6 @@
 package com.study.login.user.controller;
 
+import com.study.login.global.utils.SecurityUtils;
 import com.study.login.user.dto.*;
 import com.study.login.user.service.AuthService;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     /**
-     * Auth 회원가입 요청 처리 메서드
+     * 일반 회원가입 요청 처리 메서드
      */
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignUpRequestDto requestDto){
@@ -25,7 +26,7 @@ public class AuthController {
     }
 
     /**
-     * Auth 로그인 요청 처리 메서드
+     * 일반 로그인 요청 처리 메서드
      */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto requestDto){
@@ -46,5 +47,13 @@ public class AuthController {
     @PatchMapping("/update-info")
     public ResponseEntity<String> updateInfo(@RequestBody UpdateInfoRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.updateInfo(requestDto));
+    }
+
+    /**
+     * 현재 인증된 사용자 emial 가져오는 메서드
+     */
+    @GetMapping("/users/me")
+    public ResponseEntity<String> getProfile(){
+        return ResponseEntity.status(HttpStatus.OK).body(SecurityUtils.getCurrentUsername());
     }
 }
