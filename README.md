@@ -59,7 +59,7 @@ Spring Security + Jwt 자체 로그인 &amp; OAuth2 로그인 공부 레포지�
   }
   ```
 
-### 3. `/oauth2/authorization/google` - OAuth2 구글 로그인 & `/oauth2/authorization/kakao` - OAuth2 카카오 로그인
+### 3. `/oauth2/authorization/google` `/oauth2/authorization/kakao` - OAuth2 구글/카카오 로그인
 - **설명**: 구글/카카오 OAuth2 로그인 페이지로 리디렉션하여 사용자가 구글/카카오 계정을 통해 로그인할 수 있도록 한다. 로그인 후, 구글/카카오에서 제공하는 사용자 정보를 통해 회원 정보를 등록(or 갱신)하고, 인증 토큰을 발급한다.
 - **동작 방식(구글)**
     1. 사용자가 /oauth2/authorization/google 엔드포인트로 접근하면, Spring Security의 OAuth2 설정에 따라 구글 인증 페이지로 리디렉션된다.
